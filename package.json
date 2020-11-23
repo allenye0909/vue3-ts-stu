@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "photo-sphere-viewer": "^4.0.7",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
