@@ -74,6 +74,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/psv/demo-1',
     name: 'PSV-Demo-1',
     component: () => import(/* webpackChunkName: "about" */ '../views/PSV/Demo-1.vue')
+  },
+  {
+    path: '/psv/demo-2',
+    name: 'PSV-Demo-2',
+    component: () => import(/* webpackChunkName: "about" */ '../views/PSV/Demo-2.vue')
+  },
+  {
+    path: '/psv/demo-3',
+    name: 'PSV-Demo-3',
+    component: () => import(/* webpackChunkName: "about" */ '../views/PSV/Demo-3.vue')
   }
 ]
 
