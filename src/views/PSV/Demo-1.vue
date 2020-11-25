@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 09:53:40
- * @LastEditTime: 2020-11-24 11:26:51
+ * @LastEditTime: 2020-11-25 15:12:51
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -14,6 +14,7 @@
 <script lang="ts">
 /// <reference path="../../../declaration.d.ts" />
 import { Viewer } from "photo-sphere-viewer";
+import { setID } from "../../utils/psv";
 import { defineComponent, onMounted, ref, toRefs, reactive } from "vue";
 let viewer: any;
 export default defineComponent({
@@ -29,6 +30,8 @@ export default defineComponent({
       };
 
       viewer = new Viewer(config);
+      viewer._id = setID();
+      // console.log(viewer);
       initViewerEvent(props, context, viewer);
     }
 
@@ -44,11 +47,11 @@ export default defineComponent({
 });
 function initViewerEvent(props: any, context: any, viewer: any): void {
   viewer.on("position-updated", (e: any, position: any): void => {
-    context.emit("positionUpdated", position);
+    context.emit("positionUpdated", position, viewer._id);
   });
 
   viewer.on("zoom-updated", (e: any, zoomLevel: any): void => {
-    context.emit("zoomUpdated", zoomLevel, viewer.getPosition());
+    context.emit("zoomUpdated", zoomLevel, viewer._id);
   });
 }
 </script>

@@ -3,24 +3,24 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 09:53:40
- * @LastEditTime: 2020-11-24 11:10:08
+ * @LastEditTime: 2020-11-25 15:14:44
 -->
 <template>
   <div id="multi-viewer-container">
     <Demo1
-      ref="viewers"
+      :ref="viewers"
       v-for="(item, index) in this.viewerTitleArray"
       :key="item.name"
       :class="`viewer${index + 1}`"
       :style="`grid-area:viewer${index + 1}`"
-      @position-updated="positionUpdated"
+      @positionUpdated="positionUpdated"
       @zoomUpdated="zoomUpdated"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, onBeforeUpdate, ref, nextTick } from "vue";
 import Demo1 from "./Demo-1.vue";
 export default defineComponent({
   props: {
@@ -30,24 +30,44 @@ export default defineComponent({
     Demo1,
   },
   setup(props, context) {
-    const { positionUpdated, zoomUpdated } = watchEvent();
-    const viewers = ref(null);
-
-    onMounted(() => {
-      console.log(viewers);
-    });
+    let Refs: any[] = [];
+    let viewers = (el: any): void => {
+      if (el) {
+        // console.log(el);
+        // Refs.push(el.$.refs);
+        Refs.push(el);
+      }
+    };
+    const { positionUpdated, zoomUpdated } = watchEvent(Refs);
+    // onBeforeUpdate(() => {});
+    // onMounted(() => {});
 
     return {
       zoomUpdated,
       positionUpdated,
       viewers,
+      Refs,
     };
   },
 });
 
-const watchEvent = function(): any {
-  function positionUpdated(v: any): void {}
-  function zoomUpdated(v: number): void {}
+const watchEvent = function(viewers: any): any {
+  function positionUpdated(position: any, id: string): void {
+    for (const viewer of viewers) {
+      if (viewer.refViewer.photoSphereViewer._id !== id) {
+        // console.log(viewer.refViewer.photoSphereViewer);
+        viewer.refViewer.photoSphereViewer.rotate(position);
+      }
+    }
+  }
+  function zoomUpdated(zoomLevel: number, id: string): void {
+    for (const viewer of viewers) {
+      if (viewer.refViewer.photoSphereViewer._id !== id) {
+        // console.log(viewer.refViewer.photoSphereViewer);
+        viewer.refViewer.photoSphereViewer.zoom(zoomLevel);
+      }
+    }
+  }
   return {
     positionUpdated,
     zoomUpdated,
