@@ -3,22 +3,30 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 17:10:32
- * @LastEditTime: 2020-11-24 13:42:27
+ * @LastEditTime: 2020-11-30 09:10:05
 -->
 <template>
   <div class="panoramaContainer">
-    <Demo2 class="showThreeViewer" :viewerTitleArray="viewerTitleArray" />
+    <Demo2
+      class="showThreeViewer"
+      ref="multViewers"
+      :viewerTitleArray="viewerTitleArray"
+      @handleClick="handleClick"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, toRefs, reactive } from "vue";
+import { defineComponent, onMounted, toRefs, reactive, ref } from "vue";
 import Demo2 from "./Demo-2.vue";
 export default defineComponent({
   components: {
     Demo2,
   },
   setup() {
+    let multViewers = ref(null);
+    let viewer: any;
+
     const data: any = reactive({
       viewerTitleArray: [
         {
@@ -44,10 +52,24 @@ export default defineComponent({
         },
       ],
     });
-    onMounted(() => {});
+
+    function handleClick(target: any, MarkersPlugins: any) {
+      viewer.addMarker({
+        id: new Date().getTime(),
+        latitude: 0,
+        longitude: 0,
+        tooltip: "test>>>>>",
+      });
+    }
+    onMounted(() => {
+      const refMultViewers: any = multViewers.value;
+      viewer = refMultViewers.Refs[2];
+    });
 
     return {
       ...toRefs(data),
+      multViewers,
+      handleClick,
     };
   },
 });
