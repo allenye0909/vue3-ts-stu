@@ -90,6 +90,14 @@ const routes: Array<RouteRecordRaw> = [
     name: 'DemoVue3-$refs',
     component: () => import(/* webpackChunkName: "about" */ '../views/Demo/DemoVue3-$refs.vue')
   },
+  {
+    path: '/demo/fanxing',
+    name: 'DemoFanXing',
+    meta: {
+      title: "泛型"
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/Demo/DemoFanXing.vue')
+  },
 ]
 
 const router = createRouter({

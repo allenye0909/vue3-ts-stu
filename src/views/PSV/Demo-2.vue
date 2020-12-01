@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 09:53:40
- * @LastEditTime: 2020-11-27 13:36:24
+ * @LastEditTime: 2020-11-30 17:51:33
 -->
 <template>
   <div id="multi-viewer-container">
@@ -34,9 +34,9 @@ export default defineComponent({
   components: {
     Demo1,
   },
-  setup(props, context) {
+  setup(props: Object, context: Object) {
     let Refs: any[] = [];
-    let viewers = (el: any): void => {
+    let viewers = (el: Element): void => {
       if (el) {
         // console.log(el);
         // Refs.push(el.$.refs);
@@ -66,6 +66,7 @@ export default defineComponent({
 const watchEvent = function(props: any, context: any, viewers: any): any {
   function positionUpdated(position: any, id: string): void {
     for (const viewer of viewers) {
+      if (!viewer.refViewer) return;
       if (viewer.refViewer.photoSphereViewer._id !== id) {
         // console.log(viewer.refViewer.photoSphereViewer);
         viewer.refViewer.photoSphereViewer.rotate(position);
@@ -81,18 +82,18 @@ const watchEvent = function(props: any, context: any, viewers: any): any {
       }
     }
   }
-  function handleDblClick(target: any, MarkersPlugins: Event): void {
+  function handleDblClick(target: any): void {
     // console.log(
     //   viewers[2].refViewer.photoSphereViewer.getPlugin(MarkersPlugins)
     // );
-    context.emit("handleDblClick", target, MarkersPlugins);
+    context.emit("handleDblClick", target);
   }
 
-  function handleClick(target: any, MarkersPlugins: Event): void {
+  function handleClick(target: any): void {
     // console.log(
     //   viewers[2].refViewer.photoSphereViewer.getPlugin(MarkersPlugins)
     // );
-    context.emit("handleClick", target, MarkersPlugins);
+    context.emit("handleClick", target);
   }
   return {
     positionUpdated,

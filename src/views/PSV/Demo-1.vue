@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 09:53:40
- * @LastEditTime: 2020-11-30 09:16:16
+ * @LastEditTime: 2020-12-01 09:35:04
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -19,11 +19,18 @@ import MarkersPlugins from "photo-sphere-viewer/dist/plugins/markers";
 import { setID } from "../../utils/psv";
 import { defineComponent, onMounted, ref, toRefs, reactive } from "vue";
 
+import { addMarker, initViewerEvent } from "./demo-1";
+
 let viewer: any;
+
 export default defineComponent({
-  setup(props, context) {
+  setup(props, { emit }) {
     let refViewer = ref(null);
     const data = reactive({});
+
+    function handelAddMarker({ id, latitude, longitude, tooltip }: any):void {
+      addMarker({ id, latitude, longitude, tooltip }, viewer.getPlugin(MarkersPlugins));
+    }
 
     function initViewer() {
       const config = {
@@ -36,7 +43,7 @@ export default defineComponent({
       viewer = new Viewer(config);
       viewer._id = setID();
       // console.log(viewer);
-      initViewerEvent(props, context, viewer);
+      initViewerEvent(props, emit, viewer);
     }
 
     onMounted(() => {
@@ -46,50 +53,11 @@ export default defineComponent({
     return {
       refViewer,
       ...toRefs(data),
-      addMarker,
+      handelAddMarker,
     };
   },
 });
-function initViewerEvent(props: any, context: any, viewer: any): void {
-  viewer.on("position-updated", (e: any, position: any): void => {
-    context.emit("positionUpdated", position, viewer._id);
-  });
 
-  viewer.on("zoom-updated", (e: any, zoomLevel: any): void => {
-    context.emit("zoomUpdated", zoomLevel, viewer._id);
-  });
-
-  viewer.on("click", (target: any): void => {
-    context.emit("handleClick", target, MarkersPlugins);
-  });
-
-  viewer.on("dblclick", (target: any): void => {
-    context.emit("handleDblClick", target, MarkersPlugins);
-  });
-
-  viewer.on("select-marker", (marker: any, dblclick: any): void => {
-    context.emit("selectMarker", marker, dblclick);
-  });
-}
-function addMarker({ id, latitude, longitude, tooltip }: any) {
-  const markersPlugin = viewer.getPlugin(MarkersPlugins);
-  markersPlugin.addMarker({
-    id,
-    longitude,
-    latitude,
-    tooltip,
-    // image: require("../../assets/img/marker.gif"),
-    image: "http://photo-sphere-viewer.js.org/assets/pin-blue.png",
-    // 原图 宽高比 7.8:3
-    width: 78,
-    height: 30,
-    style: {
-      cursor: "pointer",
-      backgroundPosition: "center bottom",
-    },
-    anchor: "center 48%",
-  });
-}
 </script>
 
 <style lang="scss">

@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 17:10:32
- * @LastEditTime: 2020-11-30 09:10:05
+ * @LastEditTime: 2020-11-30 18:14:47
 -->
 <template>
   <div class="panoramaContainer">
@@ -53,17 +53,20 @@ export default defineComponent({
       ],
     });
 
-    function handleClick(target: any, MarkersPlugins: any) {
-      viewer.addMarker({
+    function handleClick(target: any) {
+      // console.log(Object.prototype.toString.call(target));
+      viewer.handelAddMarker({
         id: new Date().getTime(),
-        latitude: 0,
-        longitude: 0,
-        tooltip: "test>>>>>",
+        latitude: target.args[0].latitude,
+        longitude: target.args[0].longitude,
+        tooltip: "test>>>>>" + new Date().getTime(),
       });
     }
+
     onMounted(() => {
-      const refMultViewers: any = multViewers.value;
-      viewer = refMultViewers.Refs[2];
+      // console.log(multViewers.value);
+      const _multViewers: any = multViewers.value;
+      viewer = _multViewers.Refs[2];
     });
 
     return {
