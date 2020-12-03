@@ -3,11 +3,11 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-30 16:21:49
- * @LastEditTime: 2020-11-30 18:35:18
+ * @LastEditTime: 2020-12-03 14:06:21
  */
 
-
-export function addMarker({ id, latitude, longitude, tooltip }: any, markersPlugin: any) {
+import {AddMarkerOpts} from "./type.d"
+export function addMarker({ id, latitude, longitude, tooltip }: AddMarkerOpts, markersPlugin: any) {
   markersPlugin.addMarker({
     id,
     longitude,
@@ -26,7 +26,7 @@ export function addMarker({ id, latitude, longitude, tooltip }: any, markersPlug
   });
 }
 
-export function initViewerEvent(props: Object, emit: any, viewer: any): void {
+export function initViewerEvent(props: object, emit: any, viewer: any): void {
   viewer.on("position-updated", (e: Object, position: Object): void => {
     emit("positionUpdated", position, viewer._id);
   });

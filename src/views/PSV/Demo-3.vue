@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 17:10:32
- * @LastEditTime: 2020-11-30 18:14:47
+ * @LastEditTime: 2020-12-01 15:49:52
 -->
 <template>
   <div class="panoramaContainer">
@@ -53,7 +53,12 @@ export default defineComponent({
       ],
     });
 
-    function handleClick(target: any) {
+    interface Test {
+      args: any[];
+    }
+
+    function handleClick(target: Test) {
+      console.log(target)
       // console.log(Object.prototype.toString.call(target));
       viewer.handelAddMarker({
         id: new Date().getTime(),

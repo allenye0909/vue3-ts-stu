@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 09:53:40
- * @LastEditTime: 2020-11-30 17:51:33
+ * @LastEditTime: 2020-12-02 09:03:18
 -->
 <template>
   <div id="multi-viewer-container">
@@ -22,11 +22,11 @@
 </template>
 
 <script lang="ts">
-// /// <reference path="../../../declaration.d.ts" />
-// // import { Viewer } from "photo-sphere-viewer";
-// import MarkersPlugins from "photo-sphere-viewer/dist/plugins/markers";
 import { defineComponent, onMounted, onBeforeUpdate, ref, nextTick } from "vue";
 import Demo1 from "./Demo-1.vue";
+
+let Refs: any[] = [];
+
 export default defineComponent({
   props: {
     viewerTitleArray: Array,
@@ -35,7 +35,6 @@ export default defineComponent({
     Demo1,
   },
   setup(props: Object, context: Object) {
-    let Refs: any[] = [];
     let viewers = (el: Element): void => {
       if (el) {
         // console.log(el);
@@ -62,9 +61,12 @@ export default defineComponent({
     };
   },
 });
-
+interface Position {
+  latitude: number;
+  longitude: number;
+}
 const watchEvent = function(props: any, context: any, viewers: any): any {
-  function positionUpdated(position: any, id: string): void {
+  function positionUpdated(position: Position, id: string): void {
     for (const viewer of viewers) {
       if (!viewer.refViewer) return;
       if (viewer.refViewer.photoSphereViewer._id !== id) {

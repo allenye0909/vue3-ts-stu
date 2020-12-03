@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 09:53:40
- * @LastEditTime: 2020-12-01 09:35:04
+ * @LastEditTime: 2020-12-02 16:53:00
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -17,9 +17,10 @@ import { Viewer } from "photo-sphere-viewer";
 import MarkersPlugins from "photo-sphere-viewer/dist/plugins/markers";
 
 import { setID } from "../../utils/psv";
-import { defineComponent, onMounted, ref, toRefs, reactive } from "vue";
+import { defineComponent, onMounted, ref, toRefs, reactive, App } from "vue";
 
 import { addMarker, initViewerEvent } from "./demo-1";
+import { AddMarkerOpts } from "./type.d";
 
 let viewer: any;
 
@@ -28,8 +29,16 @@ export default defineComponent({
     let refViewer = ref(null);
     const data = reactive({});
 
-    function handelAddMarker({ id, latitude, longitude, tooltip }: any):void {
-      addMarker({ id, latitude, longitude, tooltip }, viewer.getPlugin(MarkersPlugins));
+    function handelAddMarker({
+      id,
+      latitude,
+      longitude,
+      tooltip,
+    }: AddMarkerOpts): void {
+      addMarker(
+        { id, latitude, longitude, tooltip },
+        viewer.getPlugin(MarkersPlugins)
+      );
     }
 
     function initViewer() {
@@ -57,7 +66,6 @@ export default defineComponent({
     };
   },
 });
-
 </script>
 
 <style lang="scss">
