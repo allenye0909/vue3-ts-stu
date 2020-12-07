@@ -98,6 +98,14 @@ const routes: RouteRecordRaw[] = [
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/Demo/DemoFanXing.vue')
   },
+  {
+    path: '/jspang/demo1',
+    name: 'Jspang1',
+    meta: {
+      title: "1"
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/JiShuPang/demo1.vue')
+  },
 ]
 
 const router = createRouter({

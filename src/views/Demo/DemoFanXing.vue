@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-30 14:24:14
- * @LastEditTime: 2020-12-03 14:20:47
+ * @LastEditTime: 2020-12-04 10:01:13
 -->
 <template>
   <div>
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 export default defineComponent({
   props: {
     height: {
@@ -43,12 +43,57 @@ export default defineComponent({
 
     function handelClick<T>(event: Event): void {
       console.log(event);
-      console.log(es6Unique([{name:  12}, {name:  12}, {name:  123}]))
+      console.log(es6Unique([{ name: 12 }, { name: 12 }, { name: 123 }]));
     }
 
     function es6Unique<G>(arr: G[]): G[] {
       return Array.from(new Set(arr));
     }
+
+    let people: People = {
+      name: "string",
+      age: 12,
+      // say: function():void {
+      //   console.log(123);
+      // },
+    };
+    console.log(people);
+
+    let deck: Deck = {
+      suits: ["hearts", "spades", "clubs", "diamonds"],
+      cards: Array(52),
+      // NOTE: The function now explicitly specifies that its callee must be of type Deck
+      createCardPicker: function(this: Deck) {
+        return () => {
+          let pickedCard = Math.floor(Math.random() * 52);
+          let pickedSuit = Math.floor(pickedCard / 13);
+
+          return { suit: this.suits[pickedSuit], card: pickedCard % 13 };
+        };
+      },
+    };
+
+    let cardPicker = deck.createCardPicker();
+    let pickedCard = cardPicker();
+
+    // alert("card: " + pickedCard.card + " of " + pickedCard.suit);
+
+    const tableElRef = ref<ComponentRef>(null);
+    console.log(tableElRef, ">>>>>");
+
+    interface User {
+      name: string,
+      age: number
+    }
+
+    let user :User = {
+      name: "allen",
+      age: 123
+    }
+
+    let count: number = 12.2134234;
+    console.log(count.toFixed(3), "{{{")
+    
 
     return {
       height,

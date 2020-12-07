@@ -1,16 +1,33 @@
 /*
  * @Author: your name
  * @Date: 2020-12-03 15:33:09
- * @LastEditTime: 2020-12-04 09:02:39
+ * @LastEditTime: 2020-12-04 09:36:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue3-ts-stu\src\types\demo.d.ts
  */
 
+declare interface Card {
+  suit: string;
+  card: number;
+}
+declare interface Deck {
+  suits: string[];
+  cards: number[];
+  createCardPicker(this: Deck): () => Card;
+}
+
+declare interface ComponentElRef<T extends HTMLElement = HTMLDivElement> {
+  $el: T;
+}
+
+declare type ComponentRef<T extends HTMLElement = HTMLDivElement> = ComponentElRef<T> | null;
+
+
 declare interface People {
   name: string;
-  age: 12;
-  say: Event;
+  age: number;
+  // say: any;
 }
 
 // 函数接口

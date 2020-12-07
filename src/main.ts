@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-17 11:35:15
- * @LastEditTime: 2020-12-04 09:04:25
+ * @LastEditTime: 2020-12-07 09:38:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue3-ts-stu\src\main.ts
@@ -13,8 +13,10 @@ import store from "./store";
 
 const app = createApp(App);
 
-// import { setupAntd } from "@/setup/element-ui";
-// setupAntd(app);
+// ant-design-vue
+import { setupAntd } from "@/setup/ant";
+setupAntd(app);
+
 import { setApp } from "@/setup/app";
 setApp(app);
 

@@ -4,7 +4,8 @@
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
-    "importHelpers": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true, // 引包
     "moduleResolution": "node",
     "skipLibCheck": true,
     "esModuleInterop": true,
