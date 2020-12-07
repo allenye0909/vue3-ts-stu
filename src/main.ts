@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-17 11:35:15
- * @LastEditTime: 2020-12-07 09:38:05
+ * @LastEditTime: 2020-12-07 15:57:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue3-ts-stu\src\main.ts
@@ -20,7 +20,14 @@ setupAntd(app);
 import { setApp } from "@/setup/app";
 setApp(app);
 
+
+import login from "../packages"
+
+
+
+
 app
+  .use(login)
   .use(store)
   .use(router)
   .mount("#app");

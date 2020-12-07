@@ -106,6 +106,14 @@ const routes: RouteRecordRaw[] = [
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/JiShuPang/demo1.vue')
   },
+  {
+    path: '/examples/login',
+    name: 'examplesLogin',
+    meta: {
+      title: "1"
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/examples/Login.vue')
+  },
 ]
 
 const router = createRouter({
