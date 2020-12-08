@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-08 17:05:19
+ * @LastEditTime: 2020-12-08 17:43:21
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -25,6 +25,7 @@
 
 <script lang="ts">
 import { Viewer } from "photo-sphere-viewer";
+import MarkersPlugins from "photo-sphere-viewer/dist/plugins/markers";
 import { defineComponent, onMounted, ref, unref } from "vue";
 import { setID } from "@/utils/psv";
 let refSingleViewer: any;
@@ -41,6 +42,13 @@ interface PanoramaOptions {
     roll: number;
   };
 }
+
+interface AddMarkerOptions {
+  id: string;
+  latitude: number;
+  longitude: number;
+  tooltip: string;
+}
 export default defineComponent({
   name: "panorama-viewer",
   setup(props, { emit }) {
@@ -51,14 +59,35 @@ export default defineComponent({
       viewer.setPanorama(path, options);
     }
 
+    function addMarker({ id, latitude, longitude, tooltip }: AddMarkerOptions) {
+      viewer.getPlugin(MarkersPlugins).addMarker({
+        id,
+        longitude,
+        latitude,
+        tooltip,
+        // image: require("../../assets/img/marker.gif"),
+        image: "http://photo-sphere-viewer.js.org/assets/pin-blue.png",
+        // 原图 宽高比 7.8:3
+        width: 78,
+        height: 30,
+        style: {
+          cursor: "pointer",
+          backgroundPosition: "center bottom",
+        },
+        anchor: "center 48%",
+      });
+    }
+
     onMounted(() => {
       initViewer();
       initViewerEvent(props, emit, viewer);
+      initMarkerEvent(emit, viewer.getPlugin(MarkersPlugins));
     });
 
     return {
       refSingleViewer,
       setPanorama,
+      addMarker,
     };
   },
 });
@@ -66,12 +95,12 @@ export default defineComponent({
 function initViewer() {
   const config = {
     container: refSingleViewer.value,
+    plugins: [[MarkersPlugins]],
     panorama:
       "https://i.carimg.com//zf/0/290/043/597/000/1597043290/15970432906ABYwo.jpg",
   };
   viewer = new Viewer(config);
   viewer._id = setID();
-  console.log(viewer)
 }
 
 function initViewerEvent(props: any, emit: any, viewer: any): void {
@@ -90,10 +119,15 @@ function initViewerEvent(props: any, emit: any, viewer: any): void {
   viewer.on("dblclick", (target: Object): void => {
     emit("handleDblClick", target);
   });
+}
 
-  viewer.on("select-marker", (marker: Object, dblclick: Object): void => {
-    emit("selectMarker", marker, dblclick);
-  });
+function initMarkerEvent(emit: any, markersPlugin: any) {
+  markersPlugin.on(
+    "select-marker",
+    (marker: Object, dblclick: Object): void => {
+      emit("selectMarker", marker, dblclick);
+    }
+  );
 }
 </script>
 
