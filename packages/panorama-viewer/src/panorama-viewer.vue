@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-08 16:03:32
+ * @LastEditTime: 2020-12-08 17:05:19
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -26,6 +26,7 @@
 <script lang="ts">
 import { Viewer } from "photo-sphere-viewer";
 import { defineComponent, onMounted, ref, unref } from "vue";
+import { setID } from "@/utils/psv";
 let refSingleViewer: any;
 let viewer: any;
 interface PanoramaOptions {
@@ -69,6 +70,8 @@ function initViewer() {
       "https://i.carimg.com//zf/0/290/043/597/000/1597043290/15970432906ABYwo.jpg",
   };
   viewer = new Viewer(config);
+  viewer._id = setID();
+  console.log(viewer)
 }
 
 function initViewerEvent(props: any, emit: any, viewer: any): void {
