@@ -114,6 +114,14 @@ const routes: RouteRecordRaw[] = [
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/examples/Login.vue')
   },
+  {
+    path: '/examples/singleViewer',
+    name: 'examplesSingleViewer',
+    meta: {
+      title: "1"
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/examples/SingleViewer.vue')
+  },
 ]
 
 const router = createRouter({
