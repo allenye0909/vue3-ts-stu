@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-17 11:35:15
- * @LastEditTime: 2020-12-07 15:57:59
+ * @LastEditTime: 2020-12-08 09:46:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue3-ts-stu\src\main.ts
@@ -20,11 +20,9 @@ setupAntd(app);
 import { setApp } from "@/setup/app";
 setApp(app);
 
+import login from "../packages";
 
-import login from "../packages"
-
-
-
+app.config.globalProperties.$api = "http://www.baidu.com";
 
 app
   .use(login)
