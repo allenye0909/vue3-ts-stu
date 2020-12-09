@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-09 09:13:29
+ * @LastEditTime: 2020-12-09 14:22:17
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -28,7 +28,6 @@ import { Viewer } from "photo-sphere-viewer";
 import MarkersPlugins from "photo-sphere-viewer/dist/plugins/markers";
 import { defineComponent, onMounted, ref, unref } from "vue";
 import { setID } from "@/utils/psv";
-let refSingleViewer: any;
 let viewer: any;
 interface PanoramaOptions {
   longitude?: number;
@@ -52,7 +51,7 @@ interface AddMarkerOptions {
 export default defineComponent({
   name: "panorama-viewer",
   setup(props, { emit }) {
-    refSingleViewer = ref(null);
+    let refSingleViewer = ref(null);
     viewer = ref(null);
 
     function setPanorama(path: string, options: PanoramaOptions) {
@@ -79,7 +78,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      initViewer();
+      initViewer(refSingleViewer);
       initViewerEvent(props, emit);
       initMarkerEvent(emit);
     });
@@ -92,7 +91,7 @@ export default defineComponent({
   },
 });
 
-function initViewer() {
+function initViewer(refSingleViewer: any) {
   const config = {
     container: refSingleViewer.value,
     plugins: [[MarkersPlugins]],
