@@ -3,12 +3,13 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:37:02
- * @LastEditTime: 2020-12-08 10:21:18
+ * @LastEditTime: 2020-12-09 09:41:29
  */
 import login from "./login";
 import PanoramaViewer from "./panorama-viewer";
+import MultiPanoramaViewer from "./multi-panorama-viewer";
 
-const components = [login, PanoramaViewer];
+const components = [login, PanoramaViewer, MultiPanoramaViewer];
 
 const install = function(Vue: any): any {
   // if (install.installed) return;
@@ -23,4 +24,5 @@ export default {
   install,
   login,
   PanoramaViewer,
+  MultiPanoramaViewer,
 };
