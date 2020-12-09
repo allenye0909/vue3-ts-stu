@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-08 17:43:21
+ * @LastEditTime: 2020-12-09 09:13:29
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -80,8 +80,8 @@ export default defineComponent({
 
     onMounted(() => {
       initViewer();
-      initViewerEvent(props, emit, viewer);
-      initMarkerEvent(emit, viewer.getPlugin(MarkersPlugins));
+      initViewerEvent(props, emit);
+      initMarkerEvent(emit);
     });
 
     return {
@@ -103,7 +103,7 @@ function initViewer() {
   viewer._id = setID();
 }
 
-function initViewerEvent(props: any, emit: any, viewer: any): void {
+function initViewerEvent(props: any, emit: any): void {
   viewer.on("position-updated", (e: Object, position: Object): void => {
     emit("positionUpdated", position, viewer._id);
   });
@@ -121,13 +121,12 @@ function initViewerEvent(props: any, emit: any, viewer: any): void {
   });
 }
 
-function initMarkerEvent(emit: any, markersPlugin: any) {
-  markersPlugin.on(
-    "select-marker",
-    (marker: Object, dblclick: Object): void => {
+function initMarkerEvent(emit: any) {
+  viewer
+    .getPlugin(MarkersPlugins)
+    .on("select-marker", (marker: Object, dblclick: Object): void => {
       emit("selectMarker", marker, dblclick);
-    }
-  );
+    });
 }
 </script>
 
