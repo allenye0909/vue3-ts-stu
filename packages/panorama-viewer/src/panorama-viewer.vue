@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-11 11:00:47
+ * @LastEditTime: 2020-12-11 16:00:55
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -26,28 +26,9 @@
 <script lang="ts">
 import { Viewer } from "photo-sphere-viewer";
 import MarkersPlugins from "photo-sphere-viewer/dist/plugins/markers";
-import { defineComponent, onMounted, ref, unref } from "vue";
+import { defineComponent, onMounted, onBeforeUpdate, ref, unref } from "vue";
 import { setID } from "@/utils/psv";
 let viewer: any;
-interface PanoramaOptions {
-  longitude?: number;
-  latitude?: number;
-  zoom?: number;
-  showLoader?: boolean;
-  transition?: number;
-  sphereCorrection?: {
-    pan: number;
-    tilt: number;
-    roll: number;
-  };
-}
-
-interface AddMarkerOptions {
-  id: string;
-  latitude: number;
-  longitude: number;
-  tooltip: string;
-}
 type EmitType = (event: string, ...args: any[]) => void;
 
 export default defineComponent({
@@ -66,6 +47,10 @@ export default defineComponent({
       initMarkerEvent(emit);
     });
 
+    onBeforeUpdate(() => {
+      console.log("onBeforeUpdate")
+    })
+
     return {
       refSingleViewer,
       setPanorama,
@@ -79,17 +64,17 @@ function initViewer(refSingleViewer: any): void {
   const config = {
     container: refSingleViewer.value,
     plugins: [[MarkersPlugins]],
-    panorama:
-      "https://i.carimg.com//zf/0/290/043/597/000/1597043290/15970432906ABYwo.jpg",
+    // panorama:
+    //   "https://i.carimg.com//zf/0/290/043/597/000/1597043290/15970432906ABYwo.jpg",
   };
   viewer = new Viewer(config);
   viewer._id = setID();
 }
 
 function initViewerEvent(props: any, emit: EmitType): void {
-  setTimeout(() => {
-    viewer.navbar.hide();
-  }, 200);
+  // setTimeout(() => {
+  //   viewer.navbar.hide();
+  // }, 200);
   viewer.on("position-updated", (e: Object, position: Object): void => {
     emit("positionUpdated", position, viewer._id);
   });
@@ -170,9 +155,9 @@ function handelMarker() {
   .viewerContainer {
     height: 100%;
     width: 100%;
-    // .psv-navbar {
-    //   bottom: -40px !important;
-    // }
+    .psv-navbar {
+      bottom: -40px !important;
+    }
   }
 }
 </style>

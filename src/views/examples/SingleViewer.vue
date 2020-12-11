@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-08 10:19:03
- * @LastEditTime: 2020-12-11 10:46:30
+ * @LastEditTime: 2020-12-11 15:19:37
 -->
 <template>
   <div class="example">
@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, onBeforeUpdate, ref } from "vue";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
@@ -47,7 +47,13 @@ export default defineComponent({
       handelGotoMultiViewer,
     } = handelTestButtonEvent();
 
-    onMounted(() => {});
+    onBeforeUpdate(() => {
+      handelSetPanorama();
+    });
+
+    onMounted(() => {
+      handelSetPanorama();
+    });
 
     return {
       refSingleViewer,
@@ -65,13 +71,14 @@ export default defineComponent({
 function handelTestButtonEvent() {
   let refSingleViewer = ref(null);
   const { push } = useRouter();
+  const viewer: any = refSingleViewer.value;
 
-  function positionUpdated(position) {
+  function positionUpdated(position: ViewerPosition) {
     // console.log(position);
   }
 
-  function handleDblClick(target) {
-    refSingleViewer.value.setPanorama(
+  function handleDblClick(target: any) {
+    viewer.setPanorama(
       "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
       {
         showLoader: false,
@@ -84,7 +91,7 @@ function handelTestButtonEvent() {
       }
     );
 
-    refSingleViewer.value.addMarker({
+    viewer.addMarker({
       id: new Date().getTime(),
       latitude: target.args[0].latitude,
       longitude: target.args[0].longitude,
@@ -92,8 +99,8 @@ function handelTestButtonEvent() {
     });
   }
 
-  function handelSelectMarker(marker, dblclick) {
-    refSingleViewer.value.setPanorama(
+  function handelSelectMarker(marker: any, dblclick: any) {
+    viewer.setPanorama(
       "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
       {
         showLoader: false,
@@ -108,7 +115,7 @@ function handelTestButtonEvent() {
   }
 
   function handelSetPanorama() {
-    refSingleViewer.value.setPanorama(
+    viewer.setPanorama(
       "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
       {
         showLoader: false,
@@ -123,7 +130,7 @@ function handelTestButtonEvent() {
   }
 
   function handelAddMarker() {
-    refSingleViewer.value.addMarker({
+    viewer.addMarker({
       id: new Date().getTime(),
       latitude: 0,
       longitude: 0,
@@ -132,7 +139,7 @@ function handelTestButtonEvent() {
   }
 
   function handelResize() {
-    refSingleViewer.value.handelResizeViewer();
+    viewer.handelResizeViewer();
   }
 
   function handelGotoMultiViewer() {

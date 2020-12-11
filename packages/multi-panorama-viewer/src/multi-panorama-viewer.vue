@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-11 10:36:44
+ * @LastEditTime: 2020-12-11 15:54:27
 -->
 <template>
   <div id="multi-viewer-container" ref="container">
@@ -36,7 +36,11 @@ export default defineComponent({
     viewerTitleArray: Array,
   },
   setup() {
-    const { refMultiViewer, handelResize } = handelViewers();
+    const {
+      refMultiViewer,
+      handelResize,
+      handelMultiSetPanorama,
+    } = handelViewers();
     onMounted(() => {});
     onBeforeUpdate(() => {
       refMultiViewer.value = [];
@@ -44,6 +48,7 @@ export default defineComponent({
     return {
       refMultiViewer,
       handelResize,
+      handelMultiSetPanorama,
     };
   },
 });
@@ -60,9 +65,20 @@ function handelViewers() {
     }
   }
 
+  function handelMultiSetPanorama(multiViewerData: any) {
+    for (var i = 0; i < refMultiViewer.value.length; i++) {
+      let viewer: any = refMultiViewer.value[i];
+      viewer.refSingleViewer.photoSphereViewer.setPanorama(
+        multiViewerData[i].path,
+        multiViewerData[i].options
+      );
+    }
+  }
+
   return {
     refMultiViewer,
     handelResize,
+    handelMultiSetPanorama,
   };
 }
 </script>

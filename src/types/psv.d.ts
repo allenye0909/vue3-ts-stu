@@ -1,12 +1,10 @@
 /*
- * @Description: xxx
+ * @Description: psv
  * @Author: allenye
  * @Email: allenye@aliyun.com
- * @Date: 2020-11-23 10:17:54
- * @LastEditTime: 2020-12-11 15:19:30
+ * @Date: 2020-12-11 13:49:37
+ * @LastEditTime: 2020-12-11 13:50:13
  */
-declare module "photo-sphere-viewer";
-declare module "photo-sphere-viewer/dist/plugins/markers";
 declare interface PanoramaOptions {
   longitude?: number;
   latitude?: number;
@@ -19,14 +17,9 @@ declare interface PanoramaOptions {
     roll: number;
   };
 }
-interface AddMarkerOptions {
+declare interface AddMarkerOptions {
   id: string;
   latitude: number;
   longitude: number;
   tooltip: string;
-}
-
-interface ViewerPosition {
-  latitude: number;
-  longitude: number;
 }
