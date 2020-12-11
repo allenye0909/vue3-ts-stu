@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-11 10:48:59
+ * @LastEditTime: 2020-12-11 11:00:47
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -87,6 +87,9 @@ function initViewer(refSingleViewer: any): void {
 }
 
 function initViewerEvent(props: any, emit: EmitType): void {
+  setTimeout(() => {
+    viewer.navbar.hide();
+  }, 200);
   viewer.on("position-updated", (e: Object, position: Object): void => {
     emit("positionUpdated", position, viewer._id);
   });
@@ -167,9 +170,9 @@ function handelMarker() {
   .viewerContainer {
     height: 100%;
     width: 100%;
-    .psv-navbar {
-      bottom: -40px !important;
-    }
+    // .psv-navbar {
+    //   bottom: -40px !important;
+    // }
   }
 }
 </style>
