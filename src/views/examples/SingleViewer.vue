@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-08 10:19:03
- * @LastEditTime: 2020-12-11 15:19:37
+ * @LastEditTime: 2020-12-11 16:59:46
 -->
 <template>
   <div class="example">
@@ -71,13 +71,13 @@ export default defineComponent({
 function handelTestButtonEvent() {
   let refSingleViewer = ref(null);
   const { push } = useRouter();
-  const viewer: any = refSingleViewer.value;
 
   function positionUpdated(position: ViewerPosition) {
     // console.log(position);
   }
 
   function handleDblClick(target: any) {
+    const viewer: any = refSingleViewer.value;
     viewer.setPanorama(
       "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
       {
@@ -100,6 +100,7 @@ function handelTestButtonEvent() {
   }
 
   function handelSelectMarker(marker: any, dblclick: any) {
+    const viewer: any = refSingleViewer.value;
     viewer.setPanorama(
       "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
       {
@@ -115,6 +116,7 @@ function handelTestButtonEvent() {
   }
 
   function handelSetPanorama() {
+    const viewer: any = refSingleViewer.value;
     viewer.setPanorama(
       "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
       {
@@ -130,6 +132,7 @@ function handelTestButtonEvent() {
   }
 
   function handelAddMarker() {
+    const viewer: any = refSingleViewer.value;
     viewer.addMarker({
       id: new Date().getTime(),
       latitude: 0,
@@ -139,6 +142,7 @@ function handelTestButtonEvent() {
   }
 
   function handelResize() {
+    const viewer: any = refSingleViewer.value;
     viewer.handelResizeViewer();
   }
 

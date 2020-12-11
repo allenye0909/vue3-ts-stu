@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-11 16:00:55
+ * @LastEditTime: 2020-12-11 17:01:00
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -48,8 +48,8 @@ export default defineComponent({
     });
 
     onBeforeUpdate(() => {
-      console.log("onBeforeUpdate")
-    })
+      console.log("onBeforeUpdate");
+    });
 
     return {
       refSingleViewer,
