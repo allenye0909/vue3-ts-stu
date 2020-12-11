@@ -3,16 +3,22 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-08 10:19:03
- * @LastEditTime: 2020-12-08 17:44:26
+ * @LastEditTime: 2020-12-09 16:19:33
 -->
 <template>
   <div class="example">
     <div class="toolContainer">
+      <a-button class="mr10" type="primary" @click="handelGotoMultiViewer"
+        >多屏</a-button
+      >
       <a-button class="mr10" type="primary" @click="handelSetPanorama"
         >切换图片</a-button
       >
       <a-button class="mr10" type="primary" @click="handelAddMarker"
         >添加marker</a-button
+      >
+      <a-button class="mr10" type="primary" @click="handelResize"
+        >resize</a-button
       >
     </div>
     <panorama-viewer
@@ -26,14 +32,17 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+
 export default defineComponent({
   setup() {
     let refSingleViewer = ref(null);
+    const { push } = useRouter();
 
     function positionUpdated(position) {
       // console.log(position);
     }
-    
+
     function handleDblClick(target) {
       refSingleViewer.value.setPanorama(
         "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
@@ -95,6 +104,14 @@ export default defineComponent({
       });
     }
 
+    function handelResize() {
+      refSingleViewer.value.handelResizeViewer();
+    }
+
+    function handelGotoMultiViewer() {
+      push({ path: "/examples/multiViewer" });
+    }
+
     onMounted(() => {});
 
     return {
@@ -103,7 +120,9 @@ export default defineComponent({
       handleDblClick,
       handelSetPanorama,
       handelAddMarker,
-      handelSelectMarker
+      handelSelectMarker,
+      handelResize,
+      handelGotoMultiViewer,
     };
   },
 });

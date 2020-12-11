@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-09 14:22:17
+ * @LastEditTime: 2020-12-11 09:52:53
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -29,6 +29,7 @@ import MarkersPlugins from "photo-sphere-viewer/dist/plugins/markers";
 import { defineComponent, onMounted, ref, unref } from "vue";
 import { setID } from "@/utils/psv";
 let viewer: any;
+let ddddd = 1;
 interface PanoramaOptions {
   longitude?: number;
   latitude?: number;
@@ -77,6 +78,17 @@ export default defineComponent({
       });
     }
 
+    function handelResizeViewer() {
+      console.log(viewer._id);
+      const random = 100;
+      viewer.resize({ width: `${random}%`, height: `${random}%` });
+      // viewer.needsUpdate();
+      // viewer.autoSize();
+      // viewer.toggleFullscreen();
+      // viewer.showError();
+      // console.log(viewer);
+    }
+
     onMounted(() => {
       initViewer(refSingleViewer);
       initViewerEvent(props, emit);
@@ -87,11 +99,13 @@ export default defineComponent({
       refSingleViewer,
       setPanorama,
       addMarker,
+      handelResizeViewer,
+      ddddd: ddddd++,
     };
   },
 });
 
-function initViewer(refSingleViewer: any) {
+function initViewer(refSingleViewer: any): void {
   const config = {
     container: refSingleViewer.value,
     plugins: [[MarkersPlugins]],
@@ -102,7 +116,9 @@ function initViewer(refSingleViewer: any) {
   viewer._id = setID();
 }
 
-function initViewerEvent(props: any, emit: any): void {
+type EmitType = (event: string, ...args: any[]) => void;
+
+function initViewerEvent(props: any, emit: EmitType): void {
   viewer.on("position-updated", (e: Object, position: Object): void => {
     emit("positionUpdated", position, viewer._id);
   });
@@ -120,7 +136,7 @@ function initViewerEvent(props: any, emit: any): void {
   });
 }
 
-function initMarkerEvent(emit: any) {
+function initMarkerEvent(emit: any): void {
   viewer
     .getPlugin(MarkersPlugins)
     .on("select-marker", (marker: Object, dblclick: Object): void => {

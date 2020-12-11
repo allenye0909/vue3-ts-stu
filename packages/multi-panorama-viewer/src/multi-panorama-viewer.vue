@@ -3,11 +3,16 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-09 14:33:48
+ * @LastEditTime: 2020-12-11 09:56:22
 -->
 <template>
   <div id="multi-viewer-container" ref="container">
     <panorama-viewer
+      :ref="
+        (el) => {
+          if (el) refMultiViewer[index] = el;
+        }
+      "
       :class="`viewer${index + 1}`"
       :style="`grid-area:viewer${index + 1}`"
       v-for="(item, index) in viewerTitleArray"
@@ -17,14 +22,40 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {
+  defineComponent,
+  onMounted,
+  onBeforeUpdate,
+  ref,
+  unref,
+  nextTick,
+} from "vue";
+let refMultiViewer: any[] = [];
 export default defineComponent({
   name: "MultiPanoramaViewer",
   props: {
     viewerTitleArray: Array,
   },
   setup() {
-    console.log(">>>>>");
+    const refMultiViewer = ref([]);
+    function handelResize() {
+      let viewer: any;
+      for (viewer of refMultiViewer.value) {
+        const random = 100;
+        viewer.refSingleViewer.photoSphereViewer.resize({
+          width: `${random}%`,
+          height: `${random}%`,
+        });
+      }
+    }
+    onMounted(() => {});
+    onBeforeUpdate(() => {
+      refMultiViewer.value = [];
+    });
+    return {
+      refMultiViewer,
+      handelResize,
+    };
   },
 });
 </script>
