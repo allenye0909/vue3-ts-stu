@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-11 09:56:22
+ * @LastEditTime: 2020-12-11 10:36:44
 -->
 <template>
   <div id="multi-viewer-container" ref="container">
@@ -30,24 +30,13 @@ import {
   unref,
   nextTick,
 } from "vue";
-let refMultiViewer: any[] = [];
 export default defineComponent({
   name: "MultiPanoramaViewer",
   props: {
     viewerTitleArray: Array,
   },
   setup() {
-    const refMultiViewer = ref([]);
-    function handelResize() {
-      let viewer: any;
-      for (viewer of refMultiViewer.value) {
-        const random = 100;
-        viewer.refSingleViewer.photoSphereViewer.resize({
-          width: `${random}%`,
-          height: `${random}%`,
-        });
-      }
-    }
+    const { refMultiViewer, handelResize } = handelViewers();
     onMounted(() => {});
     onBeforeUpdate(() => {
       refMultiViewer.value = [];
@@ -58,6 +47,24 @@ export default defineComponent({
     };
   },
 });
+function handelViewers() {
+  const refMultiViewer = ref([]);
+  function handelResize() {
+    let viewer: any;
+    for (viewer of refMultiViewer.value) {
+      const random = 100;
+      viewer.refSingleViewer.photoSphereViewer.resize({
+        width: `${random}%`,
+        height: `${random}%`,
+      });
+    }
+  }
+
+  return {
+    refMultiViewer,
+    handelResize,
+  };
+}
 </script>
 
 <style>

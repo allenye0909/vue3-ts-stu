@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-09 09:44:59
- * @LastEditTime: 2020-12-11 09:50:18
+ * @LastEditTime: 2020-12-11 10:42:39
 -->
 <template>
   <div class="example">
@@ -40,26 +40,14 @@ import { defineComponent, ref, onMounted, unref } from "vue";
 import { useRouter } from "vue-router";
 export default defineComponent({
   setup() {
-    const { push } = useRouter();
-    let showViewerNum = ref(3);
-    let refMultiViewers = ref(null);
-    function handelSetPanorama() {}
-    function handelAddMarker() {}
-    function handelChangeScreen() {
-      if (showViewerNum.value === 3) {
-        showViewerNum.value = 1;
-      } else if (showViewerNum.value === 2) {
-        showViewerNum.value = 3;
-      } else {
-        showViewerNum.value = 2;
-      }
-      setTimeout(() => {
-        refMultiViewers.value.handelResize();
-      })
-    }
-    function handelGotoSingleViewer() {
-      push({ path: "/examples/singleViewer" });
-    }
+    const {
+      showViewerNum,
+      refMultiViewers,
+      handelSetPanorama,
+      handelAddMarker,
+      handelChangeScreen,
+      handelGotoSingleViewer,
+    } = handelTestButtonEvent();
     onMounted(() => {});
     return {
       showViewerNum,
@@ -94,6 +82,37 @@ export default defineComponent({
     };
   },
 });
+
+function handelTestButtonEvent() {
+  const { push } = useRouter();
+  let showViewerNum = ref(3);
+  let refMultiViewers = ref(null);
+  function handelSetPanorama() {}
+  function handelAddMarker() {}
+  function handelChangeScreen() {
+    if (showViewerNum.value === 3) {
+      showViewerNum.value = 1;
+    } else if (showViewerNum.value === 2) {
+      showViewerNum.value = 3;
+    } else {
+      showViewerNum.value = 2;
+    }
+    setTimeout(() => {
+      refMultiViewers.value.handelResize();
+    });
+  }
+  function handelGotoSingleViewer() {
+    push({ path: "/examples/singleViewer" });
+  }
+  return {
+    showViewerNum,
+    refMultiViewers,
+    handelSetPanorama,
+    handelAddMarker,
+    handelChangeScreen,
+    handelGotoSingleViewer,
+  };
+}
 </script>
 
 <style lang="scss" scoped>

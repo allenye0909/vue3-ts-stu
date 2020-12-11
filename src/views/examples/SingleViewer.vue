@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-08 10:19:03
- * @LastEditTime: 2020-12-09 16:19:33
+ * @LastEditTime: 2020-12-11 10:46:30
 -->
 <template>
   <div class="example">
@@ -36,81 +36,16 @@ import { useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
-    let refSingleViewer = ref(null);
-    const { push } = useRouter();
-
-    function positionUpdated(position) {
-      // console.log(position);
-    }
-
-    function handleDblClick(target) {
-      refSingleViewer.value.setPanorama(
-        "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
-        {
-          showLoader: false,
-          sphereCorrection: {
-            pan: Math.random() * 6,
-            tilt: 0,
-            roll: 0,
-          },
-          transition: 1000,
-        }
-      );
-
-      refSingleViewer.value.addMarker({
-        id: new Date().getTime(),
-        latitude: target.args[0].latitude,
-        longitude: target.args[0].longitude,
-        tooltip: "handleDblClick>>>>>" + new Date().getTime(),
-      });
-    }
-
-    function handelSelectMarker(marker, dblclick) {
-      refSingleViewer.value.setPanorama(
-        "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
-        {
-          showLoader: false,
-          sphereCorrection: {
-            pan: Math.random() * 6,
-            tilt: 0,
-            roll: 0,
-          },
-          transition: 1000,
-        }
-      );
-    }
-
-    function handelSetPanorama() {
-      refSingleViewer.value.setPanorama(
-        "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
-        {
-          showLoader: false,
-          sphereCorrection: {
-            pan: Math.random() * 6,
-            tilt: 0,
-            roll: 0,
-          },
-          transition: 1000,
-        }
-      );
-    }
-
-    function handelAddMarker() {
-      refSingleViewer.value.addMarker({
-        id: new Date().getTime(),
-        latitude: 0,
-        longitude: 0,
-        tooltip: "handelAddMarker" + new Date().getTime(),
-      });
-    }
-
-    function handelResize() {
-      refSingleViewer.value.handelResizeViewer();
-    }
-
-    function handelGotoMultiViewer() {
-      push({ path: "/examples/multiViewer" });
-    }
+    const {
+      refSingleViewer,
+      positionUpdated,
+      handleDblClick,
+      handelSetPanorama,
+      handelAddMarker,
+      handelSelectMarker,
+      handelResize,
+      handelGotoMultiViewer,
+    } = handelTestButtonEvent();
 
     onMounted(() => {});
 
@@ -126,6 +61,95 @@ export default defineComponent({
     };
   },
 });
+
+function handelTestButtonEvent() {
+  let refSingleViewer = ref(null);
+  const { push } = useRouter();
+
+  function positionUpdated(position) {
+    // console.log(position);
+  }
+
+  function handleDblClick(target) {
+    refSingleViewer.value.setPanorama(
+      "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
+      {
+        showLoader: false,
+        sphereCorrection: {
+          pan: Math.random() * 6,
+          tilt: 0,
+          roll: 0,
+        },
+        transition: 1000,
+      }
+    );
+
+    refSingleViewer.value.addMarker({
+      id: new Date().getTime(),
+      latitude: target.args[0].latitude,
+      longitude: target.args[0].longitude,
+      tooltip: "handleDblClick>>>>>" + new Date().getTime(),
+    });
+  }
+
+  function handelSelectMarker(marker, dblclick) {
+    refSingleViewer.value.setPanorama(
+      "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
+      {
+        showLoader: false,
+        sphereCorrection: {
+          pan: Math.random() * 6,
+          tilt: 0,
+          roll: 0,
+        },
+        transition: 1000,
+      }
+    );
+  }
+
+  function handelSetPanorama() {
+    refSingleViewer.value.setPanorama(
+      "https://i.carimg.com//zf/0/320/269/606/000/1606269320/1606269320OkSK5Z.jpg",
+      {
+        showLoader: false,
+        sphereCorrection: {
+          pan: Math.random() * 6,
+          tilt: 0,
+          roll: 0,
+        },
+        transition: 1000,
+      }
+    );
+  }
+
+  function handelAddMarker() {
+    refSingleViewer.value.addMarker({
+      id: new Date().getTime(),
+      latitude: 0,
+      longitude: 0,
+      tooltip: "handelAddMarker" + new Date().getTime(),
+    });
+  }
+
+  function handelResize() {
+    refSingleViewer.value.handelResizeViewer();
+  }
+
+  function handelGotoMultiViewer() {
+    push({ path: "/examples/multiViewer" });
+  }
+
+  return {
+    refSingleViewer,
+    positionUpdated,
+    handleDblClick,
+    handelSetPanorama,
+    handelAddMarker,
+    handelSelectMarker,
+    handelResize,
+    handelGotoMultiViewer,
+  };
+}
 </script>
 
 <style scoped lang="scss">

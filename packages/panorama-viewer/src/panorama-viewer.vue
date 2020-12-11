@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-11 09:52:53
+ * @LastEditTime: 2020-12-11 10:48:59
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -29,7 +29,6 @@ import MarkersPlugins from "photo-sphere-viewer/dist/plugins/markers";
 import { defineComponent, onMounted, ref, unref } from "vue";
 import { setID } from "@/utils/psv";
 let viewer: any;
-let ddddd = 1;
 interface PanoramaOptions {
   longitude?: number;
   latitude?: number;
@@ -49,45 +48,17 @@ interface AddMarkerOptions {
   longitude: number;
   tooltip: string;
 }
+type EmitType = (event: string, ...args: any[]) => void;
+
 export default defineComponent({
   name: "panorama-viewer",
   setup(props, { emit }) {
     let refSingleViewer = ref(null);
     viewer = ref(null);
 
-    function setPanorama(path: string, options: PanoramaOptions) {
-      viewer.setPanorama(path, options);
-    }
+    const { handelResizeViewer, setPanorama } = handelViewer();
 
-    function addMarker({ id, latitude, longitude, tooltip }: AddMarkerOptions) {
-      viewer.getPlugin(MarkersPlugins).addMarker({
-        id,
-        longitude,
-        latitude,
-        tooltip,
-        // image: require("../../assets/img/marker.gif"),
-        image: "http://photo-sphere-viewer.js.org/assets/pin-blue.png",
-        // 原图 宽高比 7.8:3
-        width: 78,
-        height: 30,
-        style: {
-          cursor: "pointer",
-          backgroundPosition: "center bottom",
-        },
-        anchor: "center 48%",
-      });
-    }
-
-    function handelResizeViewer() {
-      console.log(viewer._id);
-      const random = 100;
-      viewer.resize({ width: `${random}%`, height: `${random}%` });
-      // viewer.needsUpdate();
-      // viewer.autoSize();
-      // viewer.toggleFullscreen();
-      // viewer.showError();
-      // console.log(viewer);
-    }
+    const { addMarker } = handelMarker();
 
     onMounted(() => {
       initViewer(refSingleViewer);
@@ -100,7 +71,6 @@ export default defineComponent({
       setPanorama,
       addMarker,
       handelResizeViewer,
-      ddddd: ddddd++,
     };
   },
 });
@@ -115,8 +85,6 @@ function initViewer(refSingleViewer: any): void {
   viewer = new Viewer(config);
   viewer._id = setID();
 }
-
-type EmitType = (event: string, ...args: any[]) => void;
 
 function initViewerEvent(props: any, emit: EmitType): void {
   viewer.on("position-updated", (e: Object, position: Object): void => {
@@ -136,12 +104,56 @@ function initViewerEvent(props: any, emit: EmitType): void {
   });
 }
 
-function initMarkerEvent(emit: any): void {
+function initMarkerEvent(emit: EmitType): void {
   viewer
     .getPlugin(MarkersPlugins)
     .on("select-marker", (marker: Object, dblclick: Object): void => {
       emit("selectMarker", marker, dblclick);
     });
+}
+function handelViewer() {
+  function handelResizeViewer() {
+    const random = 100;
+    viewer.resize({ width: `${random}%`, height: `${random}%` });
+    // viewer.needsUpdate();
+    // viewer.autoSize();
+    // viewer.toggleFullscreen();
+    // viewer.showError();
+    // console.log(viewer);
+  }
+
+  function setPanorama(path: string, options: PanoramaOptions) {
+    viewer.setPanorama(path, options);
+  }
+
+  return {
+    handelResizeViewer,
+    setPanorama,
+  };
+}
+function handelMarker() {
+  function addMarker({ id, latitude, longitude, tooltip }: AddMarkerOptions) {
+    viewer.getPlugin(MarkersPlugins).addMarker({
+      id,
+      longitude,
+      latitude,
+      tooltip,
+      // image: require("../../assets/img/marker.gif"),
+      image: "http://photo-sphere-viewer.js.org/assets/pin-blue.png",
+      // 原图 宽高比 7.8:3
+      width: 78,
+      height: 30,
+      style: {
+        cursor: "pointer",
+        backgroundPosition: "center bottom",
+      },
+      anchor: "center 48%",
+    });
+  }
+
+  return {
+    addMarker,
+  };
 }
 </script>
 
