@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-14 13:30:26
+ * @LastEditTime: 2020-12-14 15:05:58
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -42,9 +42,8 @@ export default defineComponent({
     const { addMarker } = handelMarker();
 
     onMounted(async () => {
-      await initViewer(refSingleViewer);
-      await initViewerEvent(props, emit);
-      await initMarkerEvent(emit);
+      initViewer(props, emit, refSingleViewer);
+      initMarkerEvent(emit);
     });
 
     onBeforeUpdate(() => {
@@ -60,7 +59,7 @@ export default defineComponent({
   },
 });
 
-function initViewer(refSingleViewer: any): void {
+function initViewer(props: any, emit: EmitType, refSingleViewer: any): void {
   const config = {
     container: refSingleViewer.value,
     plugins: [[MarkersPlugins]],
@@ -69,9 +68,12 @@ function initViewer(refSingleViewer: any): void {
   };
   viewer = new Viewer(config);
   viewer._id = setID();
+  // TODO:
+  //   只能在这调用initViewerEvent
+  initViewerEvent(props, emit, viewer);
 }
 
-function initViewerEvent(props: any, emit: EmitType): void {
+function initViewerEvent(props: any, emit: EmitType, viewer: any): void {
   // setTimeout(() => {
   //   viewer.navbar.hide();
   // }, 200);
