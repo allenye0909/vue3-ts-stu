@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 09:53:40
- * @LastEditTime: 2020-12-02 16:53:00
+ * @LastEditTime: 2020-12-14 14:26:26
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -22,10 +22,9 @@ import { defineComponent, onMounted, ref, toRefs, reactive, App } from "vue";
 import { addMarker, initViewerEvent } from "./demo-1";
 import { AddMarkerOpts } from "./type.d";
 
-let viewer: any;
-
 export default defineComponent({
   setup(props, { emit }) {
+    let viewer: any;
     let refViewer = ref(null);
     const data = reactive({});
 

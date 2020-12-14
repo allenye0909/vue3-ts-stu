@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 17:10:32
- * @LastEditTime: 2020-12-01 15:49:52
+ * @LastEditTime: 2020-12-14 14:32:00
 -->
 <template>
   <div class="panoramaContainer">
@@ -71,7 +71,7 @@ export default defineComponent({
     onMounted(() => {
       // console.log(multViewers.value);
       const _multViewers: any = multViewers.value;
-      viewer = _multViewers.Refs[2];
+      viewer = _multViewers.refViewers[2];
     });
 
     return {

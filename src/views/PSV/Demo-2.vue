@@ -3,12 +3,12 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-23 09:53:40
- * @LastEditTime: 2020-12-02 09:03:18
+ * @LastEditTime: 2020-12-14 14:32:57
 -->
 <template>
   <div id="multi-viewer-container">
     <Demo1
-      :ref="viewers"
+      :ref="funcViewers"
       v-for="(item, index) in this.viewerTitleArray"
       :key="item.name"
       :class="`viewer${index + 1}`"
@@ -25,7 +25,7 @@
 import { defineComponent, onMounted, onBeforeUpdate, ref, nextTick } from "vue";
 import Demo1 from "./Demo-1.vue";
 
-let Refs: any[] = [];
+let refViewers: any[] = [];
 
 export default defineComponent({
   props: {
@@ -35,11 +35,11 @@ export default defineComponent({
     Demo1,
   },
   setup(props: Object, context: Object) {
-    let viewers = (el: Element): void => {
+    let funcViewers = (el: Element): void => {
       if (el) {
         // console.log(el);
-        // Refs.push(el.$.refs);
-        Refs.push(el);
+        // refViewers.push(el.$.refs);
+        refViewers.push(el);
       }
     };
     const {
@@ -47,7 +47,7 @@ export default defineComponent({
       zoomUpdated,
       handleDblClick,
       handleClick,
-    } = watchEvent(props, context, Refs);
+    } = watchEvent(props, context, refViewers);
     // onBeforeUpdate(() => {});
     // onMounted(() => {});
 
@@ -56,8 +56,8 @@ export default defineComponent({
       positionUpdated,
       handleDblClick,
       handleClick,
-      viewers,
-      Refs,
+      funcViewers,
+      refViewers,
     };
   },
 });

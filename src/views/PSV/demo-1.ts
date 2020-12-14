@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-11-30 16:21:49
- * @LastEditTime: 2020-12-03 14:06:21
+ * @LastEditTime: 2020-12-14 14:49:50
  */
 
 import {AddMarkerOpts} from "./type.d"
@@ -32,6 +32,7 @@ export function initViewerEvent(props: object, emit: any, viewer: any): void {
   });
 
   viewer.on("zoom-updated", (e: Object, zoomLevel: Object): void => {
+    console.log(viewer._id);
     emit("zoomUpdated", zoomLevel, viewer._id);
   });
 
