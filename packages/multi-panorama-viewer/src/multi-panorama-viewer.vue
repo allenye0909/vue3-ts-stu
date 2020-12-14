@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-14 10:42:23
+ * @LastEditTime: 2020-12-14 15:52:40
 -->
 <template>
   <div id="multi-viewer-container" ref="container">
@@ -49,7 +49,7 @@ export default defineComponent({
       console.log(refMultiViewer);
     });
     onBeforeUpdate(() => {
-      refMultiViewer.value = [];
+      // refMultiViewer.value = [];
     });
     return {
       refMultiViewer,
@@ -83,12 +83,23 @@ function handelViewers() {
     }
   }
 
-  function handelZoomUpdated(zoomLevel: number, id: string | number) {
-    console.log(zoomLevel, id);
+  function handelZoomUpdated(zoomLevel: number, id?: string | number) {
+    for (var i = 0; i < refMultiViewer.value.length; i++) {
+      let viewer: any = refMultiViewer.value[i];
+      if (viewer.refSingleViewer.photoSphereViewer._id !== id)
+        viewer.refSingleViewer.photoSphereViewer.zoom(zoomLevel);
+    }
   }
 
-  function handelPositionUpdated() {
-    console.log(">>>>");
+  function handelPositionUpdated(
+    position: ViewerPosition,
+    id: string | number
+  ) {
+    for (var i = 0; i < refMultiViewer.value.length; i++) {
+      let viewer: any = refMultiViewer.value[i];
+      if (viewer.refSingleViewer.photoSphereViewer._id !== id)
+        viewer.refSingleViewer.photoSphereViewer.rotate(position);
+    }
   }
 
   return {

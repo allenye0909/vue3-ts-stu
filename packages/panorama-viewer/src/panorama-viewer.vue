@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-14 15:05:58
+ * @LastEditTime: 2020-12-14 15:30:01
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -37,7 +37,7 @@ export default defineComponent({
     let refSingleViewer = ref(null);
     viewer = ref(null);
 
-    const { handelResizeViewer, setPanorama } = handelViewer();
+    const { handelResizeViewer, setPanorama, getViewerId } = handelViewer();
 
     const { addMarker } = handelMarker();
 
@@ -53,6 +53,7 @@ export default defineComponent({
     return {
       refSingleViewer,
       setPanorama,
+      getViewerId,
       addMarker,
       handelResizeViewer,
     };
@@ -116,9 +117,14 @@ function handelViewer() {
     viewer.setPanorama(path, options);
   }
 
+  function getViewerId() {
+    return viewer._id;
+  }
+
   return {
     handelResizeViewer,
     setPanorama,
+    getViewerId,
   };
 }
 function handelMarker() {
