@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-11 15:54:27
+ * @LastEditTime: 2020-12-14 10:42:23
 -->
 <template>
   <div id="multi-viewer-container" ref="container">
@@ -17,6 +17,8 @@
       :style="`grid-area:viewer${index + 1}`"
       v-for="(item, index) in viewerTitleArray"
       :key="index"
+      @zoomUpdated="handelZoomUpdated"
+      @positionUpdated="handelPositionUpdated"
     />
   </div>
 </template>
@@ -40,8 +42,12 @@ export default defineComponent({
       refMultiViewer,
       handelResize,
       handelMultiSetPanorama,
+      handelZoomUpdated,
+      handelPositionUpdated,
     } = handelViewers();
-    onMounted(() => {});
+    onMounted(() => {
+      console.log(refMultiViewer);
+    });
     onBeforeUpdate(() => {
       refMultiViewer.value = [];
     });
@@ -49,6 +55,8 @@ export default defineComponent({
       refMultiViewer,
       handelResize,
       handelMultiSetPanorama,
+      handelZoomUpdated,
+      handelPositionUpdated,
     };
   },
 });
@@ -75,10 +83,20 @@ function handelViewers() {
     }
   }
 
+  function handelZoomUpdated(zoomLevel: number, id: string | number) {
+    console.log(zoomLevel, id);
+  }
+
+  function handelPositionUpdated() {
+    console.log(">>>>");
+  }
+
   return {
     refMultiViewer,
     handelResize,
     handelMultiSetPanorama,
+    handelZoomUpdated,
+    handelPositionUpdated,
   };
 }
 </script>

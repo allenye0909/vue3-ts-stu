@@ -3,7 +3,7 @@
  * @Author: allenye
  * @Email: allenye@aliyun.com
  * @Date: 2020-12-07 15:31:24
- * @LastEditTime: 2020-12-11 17:01:00
+ * @LastEditTime: 2020-12-14 13:30:26
 -->
 <template>
   <div class="single-view-container" style="position: relative;">
@@ -41,10 +41,10 @@ export default defineComponent({
 
     const { addMarker } = handelMarker();
 
-    onMounted(() => {
-      initViewer(refSingleViewer);
-      initViewerEvent(props, emit);
-      initMarkerEvent(emit);
+    onMounted(async () => {
+      await initViewer(refSingleViewer);
+      await initViewerEvent(props, emit);
+      await initMarkerEvent(emit);
     });
 
     onBeforeUpdate(() => {
